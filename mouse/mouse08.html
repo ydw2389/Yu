@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            /* background:url(../parallax/img/img01.gif) no-repeat;
+            background-size: cover; */
+            cursor: none;
+            overflow: hidden;
+            background-color: black;
+        }
+        .curser {            
+            background:url(../parallax/img/img01.gif) no-repeat;
+            background-size: cover;
+            width: 200px; height: 200px;            
+            border-radius: 50%;            
+            position: absolute; left: 50px; top: 50px;
+            background-attachment: fixed;
+        }        
+    </style>
+</head>
+<body>
+    <div class="cover"></div>
+    <div class="curser">
+        <div class="cursor-back"></div>
+    </div>
+    <script>
+        window.addEventListener("mousemove", (e) => {
+            document.querySelector(".curser").style.left = e.pageX + -100 +"px"
+            document.querySelector(".curser").style.top = e.pageY + -100 +"px"
+        })
+    </script>
+</body>
+</html>
