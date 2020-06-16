@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>        
+        main {            
+            margin-top: 10vh;
+            padding: 0 20vw;            
+            display: grid;
+            grid-template-columns: repeat(6,1fr);
+            grid-gap: 1%;            
+        }
+        main .card {
+            width: 180px; height: 240px;            
+            position: relative;
+        }
+        main .card .front {
+            width: 100%;
+            height: 100%;            
+            position: absolute; top: 0; left: 0;
+            transition: all 1s;
+            transform: rotateY(-180deg);
+        }
+        main .card .back {
+            width: 100%;
+            height: 100%;            
+            position: absolute; top: 0; left: 0;
+            z-index: 10;
+            background: url(assets/img/cardback.jpg) no-repeat center;
+            background-size: contain;
+            backface-visibility: hidden;
+            transition: all 1s;
+            transform: rotateY(0deg);
+        }
+
+        /* main .card:hover .front {
+            transform: rotateY(0deg);
+        }
+        main .card:hover .back {
+            transform: rotateY(180deg);
+        } */
+
+        [data-type="img1"] .front {
+            background: url(assets/img/coil.jpg);
+            background-size : cover;
+        }
+        [data-type="img2"] .front {
+            background: url(assets/img/eve.jpg);
+            background-size : cover;
+        }
+        [data-type="img3"] .front {
+            background: url(assets/img/frog.jpg);
+            background-size : cover;
+        }
+        [data-type="img4"] .front {
+            background: url(assets/img/gas.jpg);
+            background-size : cover;
+        }
+        [data-type="img5"] .front {
+            background: url(assets/img/ghost.jpg);
+            background-size : cover;
+        }
+        [data-type="img6"] .front {
+            background: url(assets/img/turtle.jpg);
+            background-size : cover;
+        }
+        [data-type="img7"] .front {
+            background: url(assets/img/picachu.jpg);
+            background-size : cover;
+        }
+        [data-type="img8"] .front {
+            background: url(assets/img/pilee.jpg);
+            background-size : cover;
+        }
+        [data-type="img9"] .front {
+            background: url(assets/img/plant.jpg);
+            background-size : cover;
+        }
+    
+    </style>
+</head>
+<body>
+    <main>
+        <div class="card" data-type="img1" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img2" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img3" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img4" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img5" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img6" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img7" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img8" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img9" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+
+        <div class="card" data-type="img1" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img2" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img3" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img4" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img5" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img6" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img7" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img8" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img9" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>        
+    </main>
+    <script src="assets/js/jquery-1.12.4.min.js"></script>    
+    <script>
+        $(".card").click(function(){
+            $(this).find(".front").css({transform:"rotateY(0deg)"})
+            $(this).find(".back").css({transform:"rotateY(180deg)"})
+        })
+    </script>
+</body>
+</html>
