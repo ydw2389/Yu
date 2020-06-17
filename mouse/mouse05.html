@@ -455,7 +455,28 @@ pre[class*="language-"].line-numbers > code {
                 <span class="control"></span>
                 <span class="control"></span>
                 <span class="control"></span>
-<pre class="line-numbers"><code class="language-js">    
+<pre class="line-numbers"><code class="language-js">$(".move-image span").hover(function(){
+    $(".cursor").css({background:"pink"})
+}, function(){
+    $(".cursor").css({background:"white"})
+})
+
+
+$(".move-image").mousemove(function(e){
+    $(".cursor").css({left:e.pageX + "px" ,top:e.pageY + "px"})     
+
+    let x = e.clientX - ($(".move-image").width()/2 + $(".move-image").position().left)
+    let y = e.clientY - ($(".move-image").height()/2 + $(".move-image").position().top)
+    
+    $(".cursor .mouseX").text(x)
+    $(".cursor .mouseY").text(y)
+
+    $(".img").attr({"style":"transform:translate(" + x/20 + "px," + y/20 + "px)"})
+})
+
+$(".cord").click(function(){
+    $(".cursor strong").fadeToggle()
+})    
 </code></pre>
             </div>
             <a class="close">Close</a>
@@ -470,7 +491,7 @@ pre[class*="language-"].line-numbers > code {
      </div>
 
      <div class="contents">
-        <div class="move-image"">
+        <div class="move-image">
             <div class="mimg">
                 <img src="../slider/img/img05.gif" alt="" class="img" style="transform: translate(10px,10px)">
             </div>
@@ -486,28 +507,28 @@ pre[class*="language-"].line-numbers > code {
     <script src="../assets/js/gsap.min.js"></script>
     <script src="../assets/js/prism.js"></script>    
     <script>
-        // $(".move-image span").hover(function(){
-        //     $(".cursor").css({background:"pink"})
-        // }, function(){
-        //     $(".cursor").css({background:"white"})
-        // })
+        $(".move-image span").hover(function(){
+            $(".cursor").css({background:"pink"})
+        }, function(){
+            $(".cursor").css({background:"white"})
+        })
 
 
-        // $(".move-image").mousemove(function(e){
-        //     $(".cursor").css({left:e.pageX + "px" ,top:e.pageY + "px"})     
+        $(".move-image").mousemove(function(e){
+            $(".cursor").css({left:e.pageX + "px" ,top:e.pageY + "px"})     
 
-        //     let x = e.clientX - ($(".move-image").width()/2 + $(".move-image").position().left)
-        //     let y = e.clientY - ($(".move-image").height()/2 + $(".move-image").position().top)
+            let x = e.clientX - ($(".move-image").width()/2 + $(".move-image").position().left)
+            let y = e.clientY - ($(".move-image").height()/2 + $(".move-image").position().top)
             
-        //     $(".cursor .mouseX").text(x)
-        //     $(".cursor .mouseY").text(y)
+            $(".cursor .mouseX").text(x)
+            $(".cursor .mouseY").text(y)
 
-        //     $(".img").attr({"style":"transform:translate(" + x/20 + "px," + y/20 + "px)"})
-        // })
+            $(".img").attr({"style":"transform:translate(" + x/20 + "px," + y/20 + "px)"})
+        })
 
-        // $(".cord").click(function(){
-        //     $(".cursor strong").fadeToggle()
-        // })
+        $(".cord").click(function(){
+            $(".cursor strong").fadeToggle()
+        })
 
         //좌표값 중앙을 0으로 초기화
         //x = 컨텐츠 박스의 width()/2 + 왼쪽의 여백값

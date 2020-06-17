@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        @font-face {
+            font-family: 'PokemonGb';          
+            src: url('../assets/fonts/PokemonGb-RAeo.ttf') format('truetype');
+            font-style: normal;
+            font-weight: normal;
+        }
+       
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: rgb(231, 233, 132);
+            font-family: 'PokemonGb';          
+        }
+
+        /* 카드 */
+        main {
+            border-radius: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 1vh 0;
+            width: 100%;
+            max-width: 850px;
+            margin: 10% auto;
+            background-color: white;
+        }
+
+        .card {
+            position: relative;
+            width: 120px;
+            height: 165px;
+            margin: 1%;
+            perspective: 1000px;
+        }
+
+        .card>div {
+            transform-style: preserve-3d;
+        }
+
+        .card .front {
+            width: 100%;
+            height: 100%;
+            background: url(assets/img/monsterball.png) no-repeat center center;
+            background-size: contain;
+            position: relative;
+            z-index: 100;
+            transform: rotatey(0deg);
+            transition: transform 1s;
+            backface-visibility: hidden;
+            
+        }      
+        .card .back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: rotatey(-180deg);
+            transition: transform 1s;
+            backface-visibility: hidden;
+        }
+        /* 카드를 클릭했을 때 */
+        /* .card:hover .front {
+            transform: rotatey(180deg);
+            transition: transform 1s;
+        }
+
+        .card:hover .back {
+            transform: rotatey(0deg);
+            transition: transform 1s;
+        } */
+        .card.is-selected .front {
+            transform: rotatey(180deg);
+            transition: transform 0.6s;
+        }
+        
+        .card.is-selected .back {
+            transform: rotatey(0deg);
+            transition: transform 0.6s;
+        }
+
+        [data-matched="true"] .front {
+            transform: rotatey(180deg);
+            transition: transform 0.6s;
+        }
+        [data-matched="true"] .back {
+            transform: rotatey(0deg);
+            transition: transform 0.6s;
+        }
+
+
+
+        [data-type="img1"] .back {
+            background: url(assets/img/coil.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img2"] .back {
+            background: url(assets/img/eve.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img3"] .back {
+            background: url(assets/img/frog.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img4"] .back {
+            background: url(assets/img/gas.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img5"] .back {
+            background: url(assets/img/ghost.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img6"] .back {
+            background: url(assets/img/picachu.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img7"] .back {
+            background: url(assets/img/pilee.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img8"] .back {
+            background: url(assets/img/plant.jpg);
+            background-size: cover;
+        }
+
+        [data-type="img9"] .back {
+            background: url(assets/img/turtle.jpg);
+            background-size: cover;
+        }
+
+        /* info */
+        .info {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            margin-bottom: -100px;
+            color: #f9f7e8;
+        }
+        audio { position: absolute; right: 20px; top: 20px;}
+
+        .btn-sound {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 24px;
+            height: 24px;
+            background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/225363/icon-sound-on.svg);
+            background-color: transparent;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            border: none;
+            outline: none;
+        }
+        .btn-sound:active {
+            transform: translateY(1px);
+        }
+
+        .btn-sound::before {
+            content: '';
+            position: absolute;
+            top: 9px;
+            left: -2px;
+            width: 120%;
+            height: 2px;
+            background-color: #fff;
+            transform: rotate(35deg);
+            box-shadow: 0 0 0 2px #000;
+        }
+
+        .btn-sound.is-playing::before {
+            display: none;
+        }
+
+        .score {
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;            
+            padding-top: 50px;
+        }
+        .info p {
+            transform: translate(10%,0);
+            font-size: 40px;
+            font-weight: 600;
+        }
+        .turns {margin-right: 20px;}
+        .attempts {margin-right: 20px;}
+        .wins {}
+        .turns span.last-turn {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="info">        
+        <button class="btn-sound is-playing"></button>
+        <audio id="theme-song" src="assets/music/'Sneaky' - Comedy - Fun - Free Royalty Free Music.mp3" loop="loop" autoplay></audio>
+        <div class="score">
+            <div class="turns">Life : <span>2</span></div>
+            <div class="attempts">Insert Con : <span>0</span></div>
+            <div class="wins">Win : <span>0</span></div>
+        </div>
+        <p>Find Pocket Monster!</p>
+    </div>
+    
+    <main>
+        <div class="card" data-type="img1" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img2" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img3" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img4" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img5" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img6" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img7" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img8" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img9" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img1" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img2" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img3" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img4" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img5" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img6" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img7" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img8" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+        <div class="card" data-type="img9" data-matched="false">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div>
+    </main>
+
+
+    <script src="assets/js/jquery-1.12.4.min.js"></script>    
+    <script>
+
+        const $board = $('main'),
+              $card = $('.card'),
+              $btnSound = $(".btn-sound"),
+              $themeSongEl = $("#theme-song")[0],
+              $turns = $('.turns span');
+
+              selectedClass = 'is-selected', //카드를 선택했을 때
+              dataMatch = 'data-matched',
+              dataType = 'data-type',
+              playSoundClass = 'is-playing',
+              lastTurnClass = 'last-turn',
+              timeoutLength = 800,
+              turnCount = 2;        //기회 횟수 2
+
+
+              let sound = [
+                  'assets/music/pica.mp3', 
+                  'assets/music/Game_Over.mp3', 
+                  'assets/music/Leveled_Up.mp3'
+                ], 
+                soundMatch = new Audio(sound[0]),
+                soundNoMatch = new Audio(sound[1]),
+                soundSuccess = new Audio(sound[2]),
+                card1, card2;
+
+
+              $btnSound.click(function(){
+                $(this).toggleClass(playSoundClass);
+                if($btnSound.hasClass(playSoundClass)){
+                    $themeSongEl.play()
+                }else{
+                    $themeSongEl.pause()
+                }
+              })
+              
+
+
+
+
+              $card.click(function(){
+                  if($(this).attr(dataMatch)=='false'){                    
+                    $(this).addClass(selectedClass)
+                  }
+
+
+                  let selectedCards = $('.' + selectedClass); // 선택된 카드를 클래스로 변경 //.is-selected
+
+                  //만약에 카드가 똑같다면
+                  if(selectedCards.length == 2){
+                    card1 = selectedCards.eq(0).attr(dataType),
+                    card2 = selectedCards.eq(1).attr(dataType);
+
+                    //만약에 카드1과 카드2가 같다면
+                    if(card1 == card2){
+                        if($btnSound.hasClass(playSoundClass)){
+                            soundMatch.play()
+                        }
+                        selectedCards.attr(dataMatch, true).removeClass(selectedClass)
+                    }else {
+                        //카드가 맞지 않으면 원래 상태로 되돌림
+                        
+                        if($btnSound.hasClass(playSoundClass)){
+                            soundNoMatch.play()
+                        }
+
+                        setTimeout(function(){
+                            selectedCards.removeClass(selectedClass)
+                            turnCount--;
+                            $turns.html(turnCount);
+                        },timeoutLength)
+
+                        //카운트 기회가 없을 때(주의)
+                        if(turnCount ===1 ){
+                            setTimeout(function(){
+                                $turns.addClass(lastTurnClass);
+                            },timeoutLength)
+                            
+                        }
+
+                        //카운트 기회가 없을 때(Insert Coin+1, Life+2)
+                        if(turnCount <=0 ){
+                            setTimeout(function(){
+                                turnCount = 2;  //기회를 2번 복구
+                            $turns.removeClass(lastTurnClass); //주의 표시 삭제, 카운트 표시
+                            $card.attr(dataMatch, false);
+                            },timeoutLength)                            
+                        }
+                    }
+                  }
+                    
+
+
+                  //만약에 두개의 카드가 똑같다면 
+
+                  //만약에 두개의 카드가 다르다면
+              });
+    </script>
+
+
+</body>
+
+</html>
