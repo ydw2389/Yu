@@ -1,65 +1,87 @@
-
-
 /* container */
 
-.container {width: 1000px; margin: 0 auto;}
+.container {
+    width: 1000px;
+    margin: 0 auto;
+}
 
 /* row */
-.row {position: relative; margin: 0 40px;
-    border-bottom:1px solid #ccc;}
-.row:first-child {
-    margin-top: 3vh;
+.row {
+    position: relative;
+    margin: 0 20px;
+    border-bottom: 1px solid #ccc;
 }
+
+
 /* layout */
-#header .container {        
-    height: 70px;    
+#header .row {
+    margin-top: 20px;
+}
+
+#header .container {
+    height: 70px;
 }
 
 /* header */
 #header {}
+
 .header-data {
     color: #A8A8A8;
-    font-size:1em;    
+    font-size: 12px;
 }
+
 .header-title {
     font-weight: 600;
-    font-size: 3em;
+    font-size: 32px;
     margin-bottom: 10px;
 }
+
 .header-id {
-    width: 3vw; height: 3vw;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: linear-gradient(360deg, #FFFFFF 0%, #A0A0A0 100%), #686565;    
+    background: linear-gradient(360deg, #FFFFFF 0%, #A0A0A0 100%), #686565;
     color: white;
-    font-size: 2em;    
-    line-height: 3vw;
+    font-size: 20px;
+    line-height: 36px;
     text-align: center;
-    position: absolute; right: 0; bottom: 10px;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
 }
 
 /* banner */
-.banner {
-    padding-bottom: 30px;    
+#mainBanner .row {
+    margin-top: 20px;
 }
+
+.banner {
+    padding-bottom: 15px;
+}
+
 .banner .banner-title {
     font-family: 'SF Pro Display';
-    margin-top: 35px;
+    margin-top: 0px;
 }
+
 .banner .banner-title .bt-stit {
-    font-size: 1.5em; 
+    font-size: 12px;
     font-weight: 700;
-    line-height: 1.5em; 
-    color: #DA5E7C;}
+    line-height: 1.47;
+    color: #DA5E7C;
+}
+
 .banner .banner-title .bt-tit {
-    font-size: 3em; 
-    line-height: 1em; 
-    font-weight: 700;}
+    font-size: 16px;
+    font-weight: 700;
+}
+
 .banner .banner-title .bt-desc {
-    font-size: 3em; 
-    line-height: 1.8em; 
-    color: #818181; 
-    font-weight: 100;
-    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.8em;
+    color: #A8A8A8;
+    font-weight: normal;
+    margin-bottom: 10px;
 }
 
 .banner img {
@@ -67,36 +89,48 @@
 }
 
 /* recentMusic */
-#recentMusic {
-
+#recentMusic .row {
+    padding-bottom: 15px;
 }
+
 .rm-tit {
     display: flex;
     justify-content: space-between;
-    margin: 30px 0 25px 0;
+    margin: 15px 0 10px 0;
 }
+
 .rm-tit-left {
-    font-size: 2em;
+    font-size: 20px;
     font-weight: 600;
 }
+
 .rm-tit-right {
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 16px;
     color: #DA5E7C;
 }
+
 .rm-img {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
 }
+
 .rm-img p {
     font-weight: 500;
-    font-size: 1.8em;
-    line-height: 1em;
+    font-size: 16px;
+    line-height: 20px;
 }
+
 .rm-img span {
     font-weight: 500;
-    font-size: 1.8em;
-    line-height: 1em;
+    font-size: 16px;
+    line-height: 20px;
     color: #A8A8A8;
+}
+
+@media (max-width: 1020px) {
+    .container {
+        width: 100%;
+    }
 }

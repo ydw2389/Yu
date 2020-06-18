@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game</title>
+    <link rel="stylesheet" href="assets/css/prism.css">
     <style>
+        a {text-decoration: none; cursor: pointer;}
         @font-face {
-            font-family: 'PokemonGb';          
+            font-family: 'PokemonGb';
             src: url('../assets/fonts/PokemonGb-RAeo.ttf') format('truetype');
             font-style: normal;
             font-weight: normal;
         }
-       
+
         body {
-            height: 100vh;
-            overflow: hidden;
+            height: 98vh;
+            /* overflow: hidden; */
             background: rgb(231, 233, 132);
-            font-family: 'PokemonGb';          
+            font-family: 'PokemonGb';
         }
 
         /* 카드 */
@@ -30,7 +32,8 @@
             padding: 1vh 0;
             width: 100%;
             max-width: 850px;
-            margin: 10% auto;
+            margin: 0 auto;
+            margin-top: 8vh;
             background-color: white;
         }
 
@@ -56,8 +59,9 @@
             transform: rotatey(0deg);
             transition: transform 1s;
             backface-visibility: hidden;
-            
-        }      
+
+        }
+
         .card .back {
             width: 100%;
             height: 100%;
@@ -68,6 +72,7 @@
             transition: transform 1s;
             backface-visibility: hidden;
         }
+
         /* 카드를 클릭했을 때 */
         /* .card:hover .front {
             transform: rotatey(180deg);
@@ -82,7 +87,7 @@
             transform: rotatey(180deg);
             transition: transform 0.6s;
         }
-        
+
         .card.is-selected .back {
             transform: rotatey(0deg);
             transition: transform 0.6s;
@@ -92,6 +97,7 @@
             transform: rotatey(180deg);
             transition: transform 0.6s;
         }
+
         [data-matched="true"] .back {
             transform: rotatey(0deg);
             transition: transform 0.6s;
@@ -149,10 +155,14 @@
             width: 100%;
             max-width: 950px;
             margin: 0 auto;
-            margin-bottom: -100px;
-            color: #f9f7e8;
+            color: orange;
         }
-        audio { position: absolute; right: 20px; top: 20px;}
+
+        audio {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
 
         .btn-sound {
             position: absolute;
@@ -167,6 +177,7 @@
             border: none;
             outline: none;
         }
+
         .btn-sound:active {
             transform: translateY(1px);
         }
@@ -191,36 +202,155 @@
             font-weight: 800;
             display: flex;
             align-items: center;
-            justify-content: center;            
+            justify-content: center;
             padding-top: 50px;
+            font-size: 0.8vw;
         }
+
         .info p {
-            transform: translate(10%,0);
-            font-size: 40px;
+            text-align: center;
+            /* display: block; */
+            font-size: 2vw;
             font-weight: 600;
+            margin-top: 1em;
+            margin-bottom: 0;
         }
-        .turns {margin-right: 20px;}
-        .attempts {margin-right: 20px;}
+
+        .turns {
+            margin-right: 30px;
+        }
+
+        .attempts {
+            margin-right: 30px;
+        }
+
         .wins {}
+
         .turns span.last-turn {
             color: red;
+        }
+
+        .success {
+            color: silver;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .success.is-visible {
+            display: flex;
+            ;
+        }
+
+        .success-message {
+            animation: ggg 2.5s linear infinite;
+        }
+
+        @keyframes ggg {
+            0% {
+                color: red
+            }
+
+            25% {
+                color: orange;
+            }
+
+            50% {
+                color: green;
+            }
+
+            75% {
+                color: blue;
+            }
+
+            100% {
+                color: purple;
+            }
+        }
+
+        .success-score {
+            display: flex;
+            margin-top: 10px;
+            color: white;
+        }
+
+        .btn-continue {
+            margin-top: 40px;
+            padding: 15px 10px;
+            font-family: 'PokemonGb';
+            box-shadow: 4px 4px 20px;
+        }
+
+        .btn-continue:active {
+            transform: translateY(4px);
+        }
+
+        /* modal */
+        .infor4 {position: absolute; left: 0; bottom: 0; z-index: 1000; padding: 20px; font-family: none;}
+        .infor4 a {color: #fff; border: 1px solid #fff; border-radius: 30px; padding: 5px 30px}
+        .infor4 .modal {
+            background: rgba(0,0,0,0.8);
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            top: 100%;
+            left: 0;
+            text-align: left;
+            transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .infor4 .modal.show {
+            top: 0;
+        }
+        .infor4 .modal .close {
+            position: absolute; right: 10px; top: 20px;
+        }
+
+        @media(max-width: 820px) {
+            main {
+                margin-top: 6vh;
+            }
+            .card {
+                width: 72px; height: 98px;
+            }
+            .infor4 {
+                display: none;
+            }
+            .score {
+                font-size: 1.5vw;
+            }
+            .info p {
+                font-size: 4vw;
+                margin-top: 0.5em;
+            }
+
         }
     </style>
 </head>
 
 <body>
 
-    <div class="info">        
+    <div class="info">
         <button class="btn-sound is-playing"></button>
-        <audio id="theme-song" src="assets/music/'Sneaky' - Comedy - Fun - Free Royalty Free Music.mp3" loop="loop" autoplay></audio>
+        <audio id="theme-song" src="assets/music/'Sneaky' - Comedy - Fun - Free Royalty Free Music.mp3" loop="loop"
+            autoplay></audio>
         <div class="score">
             <div class="turns">Life : <span>2</span></div>
-            <div class="attempts">Insert Con : <span>0</span></div>
+            <div class="attempts">Attempt : <span>0</span></div>
             <div class="wins">Win : <span>0</span></div>
         </div>
         <p>Find Pocket Monster!</p>
     </div>
-    
+
     <main>
         <div class="card" data-type="img1" data-matched="false">
             <div class="front"></div>
@@ -296,106 +426,203 @@
         </div>
     </main>
 
+    <div class="success">
+        <h2 class="success-message">Good!!</h2>
+        <div class="success-score">
+            <div class="turns">Life : <span>2</span></div>
+            <div class="attempts">Attempt : <span>0</span></div>
+            <div class="wins">Win : <span>0</span></div>
+        </div>
+        <button class="btn-continue">Re try?</button>
+    </div>
 
-    <script src="assets/js/jquery-1.12.4.min.js"></script>    
+    <!-- 소스보기 -->
+    <div class="infor4">
+        <a href="#" class="view">소스보기</a>
+        <!-- modal -->
+        <div class="modal">
+            <div class="code-editor">
+                <span class="control"></span>
+                <span class="control"></span>
+                <span class="control"></span>
+                <pre class="line-numbers"><code class="language-js">
+</code></pre>
+            </div>
+            <a class="close">Close</a>
+        </div>
+    </div>
+    <!-- //소스보기 -->
+
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <script src="../assets/js/prism.js"></script>
     <script>
-
         const $board = $('main'),
-              $card = $('.card'),
-              $btnSound = $(".btn-sound"),
-              $themeSongEl = $("#theme-song")[0],
-              $turns = $('.turns span');
-
-              selectedClass = 'is-selected', //카드를 선택했을 때
-              dataMatch = 'data-matched',
-              dataType = 'data-type',
-              playSoundClass = 'is-playing',
-              lastTurnClass = 'last-turn',
-              timeoutLength = 800,
-              turnCount = 2;        //기회 횟수 2
-
-
-              let sound = [
-                  'assets/music/pica.mp3', 
-                  'assets/music/Game_Over.mp3', 
-                  'assets/music/Leveled_Up.mp3'
-                ], 
-                soundMatch = new Audio(sound[0]),
-                soundNoMatch = new Audio(sound[1]),
-                soundSuccess = new Audio(sound[2]),
-                card1, card2;
-
-
-              $btnSound.click(function(){
-                $(this).toggleClass(playSoundClass);
-                if($btnSound.hasClass(playSoundClass)){
-                    $themeSongEl.play()
-                }else{
-                    $themeSongEl.pause()
-                }
-              })
-              
+            $card = $('.card'),
+            $btnSound = $(".btn-sound"),
+            $themeSongEl = $("#theme-song")[0],
+            $attempts = $('.attempts span'),
+            $successMsg = $('.success-message'),
+            $success = $('.success'),
+            $turns = $('.turns span'),
+            $continue = $('.btn-continue')
+        $wins = $('.wins span');
 
 
 
 
-              $card.click(function(){
-                  if($(this).attr(dataMatch)=='false'){                    
-                    $(this).addClass(selectedClass)
-                  }
+        selectedClass = 'is-selected', //카드를 선택했을 때
+            dataMatch = 'data-matched',
+            dataType = 'data-type',
+            playSoundClass = 'is-playing',
+            visibleClass = 'is-visible'
+        lastTurnClass = 'last-turn',
+            timeoutLength = 800,
+            turnCount = 2, //기회 횟수 2
+            winsCount = 0,
+            attemptsCount = 0; //시도 횟수
 
 
-                  let selectedCards = $('.' + selectedClass); // 선택된 카드를 클래스로 변경 //.is-selected
+        let sound = [
+                'assets/music/pica.mp3',
+                'assets/music/Game_Over.mp3',
+                'assets/music/Leveled_Up.mp3'
+            ],
+            soundMatch = new Audio(sound[0]),
+            soundNoMatch = new Audio(sound[1]),
+            soundSuccess = new Audio(sound[2]),
+            card1, card2, masg;
 
-                  //만약에 카드가 똑같다면
-                  if(selectedCards.length == 2){
-                    card1 = selectedCards.eq(0).attr(dataType),
+        shuffleCards()
+
+        $btnSound.click(function () {
+            $(this).toggleClass(playSoundClass);
+            if ($btnSound.hasClass(playSoundClass)) {
+                $themeSongEl.play()
+            } else {
+                $themeSongEl.pause()
+            }
+        })
+
+
+
+
+
+        $card.click(function () {
+            if ($(this).attr(dataMatch) == 'false') {
+                $(this).addClass(selectedClass)
+            }
+
+
+            let selectedCards = $('.' + selectedClass); // 선택된 카드를 클래스로 변경 //.is-selected
+
+            //만약에 카드가 똑같다면
+            if (selectedCards.length == 2) {
+                card1 = selectedCards.eq(0).attr(dataType),
                     card2 = selectedCards.eq(1).attr(dataType);
 
-                    //만약에 카드1과 카드2가 같다면
-                    if(card1 == card2){
-                        if($btnSound.hasClass(playSoundClass)){
-                            soundMatch.play()
-                        }
-                        selectedCards.attr(dataMatch, true).removeClass(selectedClass)
-                    }else {
-                        //카드가 맞지 않으면 원래 상태로 되돌림
-                        
-                        if($btnSound.hasClass(playSoundClass)){
-                            soundNoMatch.play()
-                        }
-
-                        setTimeout(function(){
-                            selectedCards.removeClass(selectedClass)
-                            turnCount--;
-                            $turns.html(turnCount);
-                        },timeoutLength)
-
-                        //카운트 기회가 없을 때(주의)
-                        if(turnCount ===1 ){
-                            setTimeout(function(){
-                                $turns.addClass(lastTurnClass);
-                            },timeoutLength)
-                            
-                        }
-
-                        //카운트 기회가 없을 때(Insert Coin+1, Life+2)
-                        if(turnCount <=0 ){
-                            setTimeout(function(){
-                                turnCount = 2;  //기회를 2번 복구
-                            $turns.removeClass(lastTurnClass); //주의 표시 삭제, 카운트 표시
-                            $card.attr(dataMatch, false);
-                            },timeoutLength)                            
-                        }
+                //만약에 카드1과 카드2가 같다면
+                if (card1 == card2) {
+                    if ($btnSound.hasClass(playSoundClass)) {
+                        soundMatch.play()
                     }
-                  }
-                    
+                    selectedCards.attr(dataMatch, true).removeClass(selectedClass)
+                } else {
+                    //카드가 맞지 않으면 원래 상태로 되돌림
+
+                    if ($btnSound.hasClass(playSoundClass)) {
+                        soundNoMatch.play()
+                    }
+
+                    setTimeout(function () {
+                        selectedCards.removeClass(selectedClass)
+                        turnCount--;
+                        $turns.html(turnCount);
+                    }, timeoutLength)
+
+                    //카운트 기회가 없을 때(주의)
+                    if (turnCount === 1) {
+                        setTimeout(function () {
+                            $turns.addClass(lastTurnClass);
+                        }, timeoutLength)
+
+                    }
+
+                    //카운트 기회가 없을 때(Insert Coin+1, Life+2)
+                    if (turnCount <= 0) {
+                        setTimeout(function () {
+                            turnCount = 2; //기회를 2번 복구
+                            $turns.removeClass(lastTurnClass).html(turnCount); //주의 표시 삭제, 카운트 표시
+                            $card.attr(dataMatch, false);
+                            attemptsCount += 1;
+                            $attempts.html(attemptsCount)
+                        }, timeoutLength)
+                    }
+                }
+                //완성했을떄            
+
+                let dd = $('[' + dataMatch + '="true"]').length
+
+                if (dd == $card.length) {
+                    setTimeout(function () {
+                        $success.addClass(visibleClass)
+                        winsCount += 1;
+                        $wins.html(winsCount)
+                    }, 300)
+                }
+            }
+        });
+
+        //시도 횟수에 따른 메세지
+        switch (true) {
+            case (attemptsCount <= 2):
+                msg = "최고입니다. 최고의 아이큐";
+                break;
+            case (attemptsCount > 2 && attemptsCount <= 5):
+                msg = "잘하는 편이네요?";
+                break;
+            case (attemptsCount > 5 && attemptsCount <= 8):
+                msg = "뭐하냐 ㅋㅋ~";
+                break;
+            case (attemptsCount > 8):
+                msg = "능지가 박살나셨네요";
+                break;
+        }
+
+        $successMsg.text(msg);
 
 
-                  //만약에 두개의 카드가 똑같다면 
 
-                  //만약에 두개의 카드가 다르다면
-              });
+
+        //다시 게임할 때
+        $continue.click(function () {
+
+            shuffleCards()
+            $turns.removeClass(lastTurnClass).html(turnCount);
+            $success.removeClass(visibleClass);
+
+            turnCount = 2;
+            $turns.html(turnCount);
+            attemptsCount = 0;
+            $attempts.html(attemptsCount);
+            $card.attr(dataMatch, false);
+        })
+
+        //카드 셔플
+        function shuffleCards() {
+            let cards = $board.children();
+            while (cards.length) {
+                $board.append(cards.splice(Math.floor(Math.random() * cards.length), 1)[0])
+            }
+            $card.each(function (index) {
+                setTimeout(() => {
+                    $(this).addClass(selectedClass);
+                }, timeoutLength + 100 * index);
+            });
+
+            setTimeout(() => {
+                $card.removeClass(selectedClass);
+            }, 5000)
+        }
     </script>
 
 
